@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #808080;
+}
+
+.sudoku-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 40px);
+  grid-template-rows: repeat(9, 40px);
+  border-left: 2px solid #000;
+  border-top: 2px solid #000;
+  background-color: #f0f0f0;
+  margin-bottom: 2rem;
+}
+
+.cell {
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.cell:nth-child(3n) {
+  border-right: 2px solid #000;
+}
+
+.cell:nth-child(n + 19):nth-child(-n + 27),
+.cell:nth-child(n + 46):nth-child(-n + 54),
+.cell:nth-child(n + 73):nth-child(-n + 81) {
+  border-bottom: 2px solid #000;
+}
+
+.cell > input {
+  font-size: 1.5em;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  width: 32px;
+  height: 32px;
+  margin: auto;
+}
+
+.cell > .active {
+  background-color: rgba(204, 192, 20, 0.7);
+}
+
+.cell > .solved {
+  color: darkgreen;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+.solve-button {
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+}
