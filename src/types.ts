@@ -1,11 +1,8 @@
 export type SudokuCell = {
-  currentValue: number;
-  availableNumbers: Set<number>;
-};
+  currentValue: number
+  availableNumbers: Set<number>
+  solved: boolean
+  predefined: boolean
+}
 
-export type SudokuField = SudokuCell[][];
-
-export type Model = {
-  data: SudokuField;
-  cells: HTMLInputElement[];
-};
+export type SudokuField = SudokuCell[][]
