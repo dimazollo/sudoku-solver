@@ -8,10 +8,11 @@ import { isSolved } from '@/utils/isSolved'
 import { isNumberValidForPosition, processSector } from '@/utils/checks'
 import { sleep } from '@/utils/sleep'
 import { SLEEP_TIME } from '@/utils/constants'
+
 const items = reactive<SudokuCell[]>(
   Array.from({ length: 9 * 9 }, () => ({
     currentValue: 0,
-    availableNumbers: new Set<number>(),
+    candidates: new Set<number>([1, 2, 3, 4, 5, 6, 7, 8, 9]),
     solved: false,
     predefined: false
   }))
@@ -37,7 +38,7 @@ const MAX_ITERATIONS = Math.pow(10, 3)
 
 const solve = async () => {
   // block predefined inputs
-  items.filter((item) => item.currentValue !== 0).forEach((item) => item.predefined === true)
+  items.filter((item) => item.currentValue !== 0).forEach((item) => item.predefined = true)
 
   let prevFieldState = ''
   for (let globalCounter = 1; globalCounter <= MAX_ITERATIONS; ) {
@@ -55,7 +56,7 @@ const solve = async () => {
     }
     prevFieldState = currentFieldState
 
-    // set available numbers
+    // set candidates
     for (let cursor = 0; cursor < 9 * 9; cursor++) {
       globalCounter++
       activeCellNumber.value = cursor
@@ -65,25 +66,25 @@ const solve = async () => {
         throw Error('Sorry, posValue is not defined: posValue =' + posValue)
       }
 
-      console.log([...posValue.availableNumbers].sort(), posValue.currentValue)
+      console.log([...posValue.candidates].toSorted(), posValue.currentValue)
       if (posValue.currentValue !== 0) {
         continue
       }
 
-      const prevPosAvailable = [...posValue.availableNumbers].sort()
+      const prevPosCandidates = [...posValue.candidates].toSorted()
       for (let num = 1; num <= 9; num += 1) {
         if (isNumberValidForPosition(num, [posX, posY], itemMatrix.value)) {
-          posValue.availableNumbers.add(num)
+          posValue.candidates.add(num)
         } else {
-          posValue.availableNumbers.delete(num)
+          posValue.candidates.delete(num)
         }
       }
-      const afterPosAvailable = [...posValue.availableNumbers].sort()
+      const afterPosCandidates = [...posValue.candidates].toSorted()
       console.log({
         x: posX,
         y: posY,
-        before: prevPosAvailable.join(),
-        after: afterPosAvailable.join()
+        before: prevPosCandidates.join(),
+        after: afterPosCandidates.join()
       })
 
       await sleep(SLEEP_TIME)

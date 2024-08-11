@@ -1,6 +1,6 @@
 export type SudokuCell = {
   currentValue: number
-  availableNumbers: Set<number>
+  candidates: Set<number>
   solved: boolean
   predefined: boolean
 }

@@ -41,7 +41,6 @@ export function printField(data: SudokuField) {
     if ((i + 1) % 3 === 0) {
       outputStr += verticalSeparator
     }
-    // outputStr += ' |';
   })
 
   console.log(outputStr)
@@ -50,20 +49,20 @@ export function printField(data: SudokuField) {
 export function serializeSudokuField(data: SudokuField) {
   const objectForSerialization = data.flat().map((item) => ({
     ...item,
-    availableNumbers: Array.from(item.availableNumbers).sort()
+    candidates: Array.from(item.candidates).toSorted()
   }))
 
   return JSON.stringify(objectForSerialization)
 }
 
 export function fromJson(str: string, data: SudokuCell[]): void {
-  const parsed: { currentValue: number; availableNumbers: number[] }[] = JSON.parse(str)
+  const parsed: { currentValue: number; candidates: number[] }[] = JSON.parse(str)
 
   parsed.forEach((item, index) => {
     data[index].currentValue = item.currentValue
-    data[index].availableNumbers.clear()
-    for (const num of item.availableNumbers) {
-      data[index].availableNumbers.add(num)
+    data[index].candidates.clear()
+    for (const num of item.candidates) {
+      data[index].candidates.add(num)
     }
   })
 }

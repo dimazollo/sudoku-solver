@@ -1,1 +1,1 @@
-export const SLEEP_TIME = 500
+export const SLEEP_TIME = 300

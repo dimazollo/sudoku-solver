@@ -88,22 +88,22 @@ export async function processSector(
 
   activeCellNumber.value = posY * 9 + posX
   await sleep(SLEEP_TIME)
-  if (currentCell.availableNumbers.size === 0) {
+  if (currentCell.candidates.size === 0) {
     console.error(
       'Cell is empty, but there is no available numbers. Seems like Sudoku is incorrect.'
     )
     return
   }
 
-  if (currentCell.availableNumbers.size === 0) {
-    const [num] = Array.from(currentCell.availableNumbers)
+  if (currentCell.candidates.size === 0) {
+    const [num] = Array.from(currentCell.candidates)
     setValueForCell(num, pos, data)
     return
   }
 
   const [sectorPosX, sectorPosY] = pos.map((x) => Math.floor(x / 3))
 
-  for (const numToCheck of currentCell.availableNumbers) {
+  for (const numToCheck of currentCell.candidates) {
     let count = 0
     for (let j = sectorPosY * 3; j < (sectorPosY + 1) * 3; j++) {
       for (let i = sectorPosX * 3; i < (sectorPosX + 1) * 3; i++) {
@@ -113,7 +113,7 @@ export async function processSector(
         const cell = data[j][i]
         if (cell.currentValue !== 0) {
         }
-        if (cell.availableNumbers.has(numToCheck)) {
+        if (cell.candidates.has(numToCheck)) {
           count += 1
         }
       }
@@ -130,5 +130,5 @@ function setValueForCell(num: number, pos: [number, number], data: SudokuField) 
   const cell = data[posY][posX]
   cell.currentValue = num
   cell.solved = true
-  cell.availableNumbers.clear()
+  cell.candidates.clear()
 }

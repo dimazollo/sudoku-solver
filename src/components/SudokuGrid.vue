@@ -21,21 +21,24 @@ function onInput(event: Event, item: SudokuCell) {
 
 <template>
   <div class="sudoku-grid">
-    <div v-for="(item, i) in cells" class="cell">
-      <div :class="'available-numbers'">{{ [...item.availableNumbers].join('') }}</div>
+    <div
+      v-for="(item, i) in cells"
+      class="cell"
+      :class="{ active: i === activeCellNumber, disabled: item.predefined, solved: item.solved }"
+    >
+      <div class="candidates">{{ [...item.candidates].join(',') }}</div>
       <input
         type="text"
         :value="item.currentValue === 0 ? '' : item.currentValue"
-        @input="(event) => onInput(event, item)"
-        :disabled="item.predefined"
-        :class="{ active: i === activeCellNumber, solved: item.solved }"
+        @input="(event: Event) => onInput(event, item)"
+        :disabled="item.predefined || item.solved"
       />
     </div>
   </div>
 </template>
 
 <style scoped>
-.available-numbers {
+.candidates {
   position: absolute;
   top: 0;
 }
@@ -45,16 +48,24 @@ function onInput(event: Event, item: SudokuCell) {
   align-items: center;
   justify-content: center;
   position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .cell:nth-child(3n) {
   border-right: 2px solid #000;
 }
+.cell:nth-child(9n + 1) {
+  border-left: 2px solid #000;
+}
 
-.cell:nth-child(n + 19):nth-child(-n + 27),
-.cell:nth-child(n + 46):nth-child(-n + 54),
-.cell:nth-child(n + 73):nth-child(-n + 81) {
+.cell:nth-child(-1n + 9) {
+  border-top: 2px solid #000;
+}
+
+.cell:nth-child(n + 73),
+.cell:nth-child(n + 19):nth-child(-1n + 27),
+.cell:nth-child(n + 46):nth-child(-1n + 54) {
   border-bottom: 2px solid #000;
 }
 
@@ -69,11 +80,18 @@ function onInput(event: Event, item: SudokuCell) {
   z-index: 10;
 }
 
-.cell > .active {
+.cell.active {
   background-color: rgba(204, 192, 20, 0.7);
 }
 
-.cell > .solved {
-  color: darkgreen;
+.cell.solved {
+  background-color: rgba(144, 238, 144, 0.24);
+}
+.cell.solved input {
+  color: green;
+}
+
+.cell.disabled input {
+  color: rgba(0, 0, 0, 0.75);
 }
 </style>
