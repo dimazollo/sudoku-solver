@@ -12,14 +12,16 @@ import { SLEEP_TIME } from '@/utils/constants'
 const items = reactive<SudokuCell[]>(
   Array.from({ length: 9 * 9 }, () => ({
     currentValue: 0,
-    candidates: new Set<number>([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+    candidates: new Set<number>(),
     solved: false,
     predefined: false
   }))
 )
 const activeCellNumber = ref<number | null>(null)
 
-fromJson(state1, items)
+const loadBtn = () => {
+  fromJson(state1, items)
+}
 
 const itemMatrix = computed<SudokuField>(() => {
   const result: SudokuField = []
@@ -107,11 +109,18 @@ const solve = async () => {
   <form id="sudoku">
     <header>
       <h1>Sudoku Solver</h1>
-      <p>Please enter the initial Sudoku puzzle conditions and press “Solve”.</p>
+      <p>
+        Please enter the initial Sudoku puzzle conditions (<button
+          class="load-demo-btn"
+          @click.prevent="loadBtn"
+        >
+          or use demo</button
+        >) and press “Solve”.
+      </p>
     </header>
     <SudokuGrid :cells="items" :active-cell-number="activeCellNumber" />
     <div class="controls">
-      <button class="solve-button" type="submit" @click.prevent="solve">Solve!</button>
+      <button class="button" type="submit" @click.prevent="solve">Solve!</button>
     </div>
   </form>
 </template>
@@ -120,5 +129,19 @@ const solve = async () => {
 header {
   color: var(--vt-c-text-dark-1);
   margin-bottom: 16px;
+}
+
+.load-demo-btn {
+  color: #0000e4;
+  text-decoration: underline;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.load-demo-btn:active {
+  color: #3a3ae6;
 }
 </style>
