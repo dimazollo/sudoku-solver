@@ -1,18 +1,13 @@
-# sudoku-solver
+# Sudoku Solver
 
-This template should help get you started developing with Vue 3 in Vite.
+## Overview
 
-## Recommended IDE Setup
+This project is a Sudoku solver designed to assist with solving Sudoku puzzles. While it handles easy and most of the medium level puzzles effectively, there are certain cases where it might not be able to solve the puzzle, either due to its complexity or because the puzzle itself may be unsolvable.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- User Input: Enter the initial conditions of the Sudoku puzzle.
+- Automatic Solving: Once the initial conditions are set, press “Solve” to attempt solving the puzzle.
 
 ## Project Setup
 
