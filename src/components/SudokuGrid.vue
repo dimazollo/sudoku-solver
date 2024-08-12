@@ -8,13 +8,17 @@ const props = defineProps<{
 
 function onInput(event: Event, item: SudokuCell) {
   const target = event.target as HTMLInputElement
-  const value = String(target.value)
-  const newValue = value.slice(value.length - 1, value.length)
-  const numberValue = Number(newValue)
+  const valueStr = String(target.value)
+  const newValueStr = valueStr.slice(valueStr.length - 1, valueStr.length)
+  const numberValue = Number(newValueStr)
+  ;(event.target as HTMLInputElement).value = newValueStr
+  // console.log(numberValue)
   if (Number.isNaN(numberValue) || numberValue < 1) {
     item.currentValue = 0
+    console.log(item.currentValue)
   } else {
     item.currentValue = numberValue
+    console.log(item.currentValue)
   }
 }
 </script>
