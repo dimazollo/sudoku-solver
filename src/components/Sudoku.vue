@@ -38,7 +38,7 @@ const MAX_ITERATIONS = Math.pow(10, 3)
 
 const solve = async () => {
   // block predefined inputs
-  items.filter((item) => item.currentValue !== 0).forEach((item) => item.predefined = true)
+  items.filter((item) => item.currentValue !== 0).forEach((item) => (item.predefined = true))
 
   let prevFieldState = ''
   for (let globalCounter = 1; globalCounter <= MAX_ITERATIONS; ) {
@@ -105,6 +105,10 @@ const solve = async () => {
 
 <template>
   <form id="sudoku">
+    <header>
+      <h1>Sudoku Solver</h1>
+      <p>Please enter the initial Sudoku puzzle conditions and press “Solve”.</p>
+    </header>
     <SudokuGrid :cells="items" :active-cell-number="activeCellNumber" />
     <div class="controls">
       <button class="solve-button" type="submit" @click.prevent="solve">Solve!</button>
@@ -112,4 +116,9 @@ const solve = async () => {
   </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+header {
+  color: var(--vt-c-text-dark-1);
+  margin-bottom: 16px;
+}
+</style>
