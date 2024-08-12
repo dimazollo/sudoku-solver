@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { watch } from 'vue'
 import type { SudokuCell } from '@/types'
 
 const props = defineProps<{
@@ -11,14 +12,13 @@ function onInput(event: Event, item: SudokuCell) {
   const valueStr = String(target.value)
   const newValueStr = valueStr.slice(valueStr.length - 1, valueStr.length)
   const numberValue = Number(newValueStr)
-  ;(event.target as HTMLInputElement).value = newValueStr
-  // console.log(numberValue)
+
   if (Number.isNaN(numberValue) || numberValue < 1) {
     item.currentValue = 0
-    console.log(item.currentValue)
+    ;(event.target as HTMLInputElement).value = ''
   } else {
     item.currentValue = numberValue
-    console.log(item.currentValue)
+    ;(event.target as HTMLInputElement).value = newValueStr
   }
 }
 </script>
@@ -28,13 +28,18 @@ function onInput(event: Event, item: SudokuCell) {
     <div
       v-for="(item, i) in cells"
       class="cell"
+      :key="i"
       :class="{ active: i === activeCellNumber, disabled: item.predefined, solved: item.solved }"
     >
       <div class="candidates">{{ [...item.candidates].join(',') }}</div>
       <input
         type="text"
-        :value="item.currentValue === 0 ? '' : item.currentValue"
-        @input="(event: Event) => onInput(event, item)"
+        :value="cells[i].currentValue || ''"
+        @input="
+          (event: Event) => {
+            onInput(event, item)
+          }
+        "
         :disabled="item.predefined || item.solved"
       />
     </div>
