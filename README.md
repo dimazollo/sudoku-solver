@@ -2,12 +2,16 @@
 
 ## Overview
 
-This project is a Sudoku solver designed to assist with solving Sudoku puzzles. While it handles easy and most of the medium level puzzles effectively, there are certain cases where it might not be able to solve the puzzle, either due to its complexity or because the puzzle itself may be unsolvable.
+Welcome to the **Sudoku Solver**, a tool designed to solve Sudoku puzzles instead of you. While the solver excels at cracking easy and most medium-level puzzles, please note that there may be cases where certain puzzles remain unsolved due to their complexity or because they may be inherently unsolvable.
 
 ## Features
 
-- User Input: Enter the initial conditions of the Sudoku puzzle.
-- Automatic Solving: Once the initial conditions are set, press “Solve” to attempt solving the puzzle.
+- **User Input**: Seamlessly input the initial conditions of your Sudoku puzzle using our intuitive interface.
+- **Automatic Solving**: After setting up the initial conditions, simply click "Solve" to let the solver work its magic and attempt to solve the puzzle for you.
+
+## Try It Now!
+
+Experience the Sudoku Solver in action by visiting our [live demo](https://dimazollo.github.io/sudoku-solver/).
 
 ## Project Setup
 
